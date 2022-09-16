@@ -256,6 +256,8 @@ class HTTPDigestAuth(AuthBase):
             # it was to resend the request.
             r.request.body.seek(self._thread_local.pos)
         s_auth = r.headers.get("www-authenticate", "")
+        if s_auth == "":
+            s_auth = r.headers.get("x-www-authenticate", "")
 
         if "digest" in s_auth.lower() and self._thread_local.num_401_calls < 2:
 
